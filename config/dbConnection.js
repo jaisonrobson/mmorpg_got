@@ -1,17 +1,17 @@
 var mongo = require('mongodb');
 
 var connMongoDB = function() {
-    var db = new mongo.Db(
-        'got',
-        new mongo.Server(
-            'localhost',
-            27017,
-            {}
-        ),
-        {}
-    );
+    var uri = "mongodb://localhost:27017/";
+    
+    var client = new mongo.MongoClient(uri, {
+        serverApi: {
+            version: mongo.ServerApiVersion.v1,
+            strict: true,
+            deprecationErrors: true
+        }
+    });
 
-    return db;
+    return client;
 }
 
 module.exports = function() {

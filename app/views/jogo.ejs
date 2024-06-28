@@ -21,6 +21,8 @@
 				});
 
 				$('#btn_suditos').click(function() {
+					$('#erros').hide();
+
 					$.ajax({
 						url: '/suditos',
 						method: 'get',
@@ -31,6 +33,8 @@
 				});
 
 				$('#btn_pergaminhos').click(function() {
+					$('#erros').hide();
+					
 					$.ajax({
 						url: '/pergaminhos',
 						method: 'get',
@@ -55,6 +59,12 @@
 		</nav>
 
 	    <div class="container">
+
+			<% if (comando_invalido == 'S') { %>
+				<div class="alert alert-danger" id="erros">
+					<strong>Operacao invalida, verifique os campos.</strong>
+				</div>
+			<% } %>
 	    	
 			<div class="row">
 	    		<div class="col-sm-3 casa">

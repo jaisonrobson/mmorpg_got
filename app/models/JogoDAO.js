@@ -17,13 +17,13 @@ JogoDAO.prototype.gerarParametros = async function (usuario) {
     });
 }
 
-JogoDAO.prototype.iniciaJogo = async function(res, usuario, casa) {
+JogoDAO.prototype.iniciaJogo = async function(res, usuario, casa, comando_invalido) {
     const myDB = this._connection.db("got");
     const myCollection = myDB.collection("jogo");
 
     const result = await myCollection.find({ usuario: usuario }).toArray();
 
-    res.render('jogo', { img_casa: casa, jogo: result[0] });
+    res.render('jogo', { img_casa: casa, jogo: result[0], comando_invalido: comando_invalido });
 }
 
 

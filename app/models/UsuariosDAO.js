@@ -3,13 +3,10 @@ function UsuariosDAO(connection) {
 }
 
 UsuariosDAO.prototype.inserirUsuario = async function (usuario) {
-
     const myDB = this._connection.db("got");
     const myCollection = myDB.collection("usuarios");
 
     const result = await myCollection.insertOne(usuario);
-
-    console.log(`Documento inserido ${result}`);
 }
 
 UsuariosDAO.prototype.autenticar = async function(usuario, req, res) {

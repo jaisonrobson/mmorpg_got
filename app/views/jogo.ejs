@@ -21,7 +21,7 @@
 				});
 
 				$('#btn_suditos').click(function() {
-					$('#erros').hide();
+					$('#msg').hide();
 
 					$.ajax({
 						url: '/suditos',
@@ -33,7 +33,7 @@
 				});
 
 				$('#btn_pergaminhos').click(function() {
-					$('#erros').hide();
+					$('#msg').hide();
 					
 					$.ajax({
 						url: '/pergaminhos',
@@ -60,9 +60,15 @@
 
 	    <div class="container">
 
-			<% if (comando_invalido == 'S') { %>
-				<div class="alert alert-danger" id="erros">
+			<% if (msg == 'A') { %>
+				<div class="alert alert-danger" id="msg">
 					<strong>Operacao invalida, verifique os campos.</strong>
+				</div>
+			<% } %>
+
+			<% if (msg == 'B') { %>
+				<div class="alert alert-info" id="msg">
+					<strong>Acao realizada com sucesso.</strong>
 				</div>
 			<% } %>
 	    	

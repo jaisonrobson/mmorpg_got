@@ -17,6 +17,15 @@ JogoDAO.prototype.gerarParametros = async function (usuario) {
     });
 }
 
+JogoDAO.prototype.iniciaJogo = async function(res, usuario, casa) {
+    const myDB = this._connection.db("got");
+    const myCollection = myDB.collection("jogo");
+
+    const result = await myCollection.find({ usuario: usuario }).toArray();
+
+    res.render('jogo', { img_casa: casa, jogo: result[0] });
+}
+
 
 module.exports = function() {
     return JogoDAO;

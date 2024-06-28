@@ -45,6 +45,14 @@ JogoDAO.prototype.acao = async function(acao) {
     const result = await myCollection.insertOne(acao);
 }
 
+JogoDAO.prototype.getAcoes = async function(usuario) {
+    const myDB = this._connection.db("got");
+    const myCollection = myDB.collection("acao");
+
+    const result = await myCollection.find({ usuario: usuario }).toArray();
+
+}
+
 
 module.exports = function() {
     return JogoDAO;

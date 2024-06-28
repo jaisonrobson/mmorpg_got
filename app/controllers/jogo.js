@@ -27,7 +27,7 @@ module.exports.suditos = function(application, req, res){
     if (req.session.autorizado !== true) {
         res.send('Usuario nao esta logado.');
 
-        return;        
+        return;
     }
 
     res.render('aldeoes', { validacao: {} });
@@ -37,8 +37,13 @@ module.exports.pergaminhos = function(application, req, res){
     if (req.session.autorizado !== true) {
         res.send('Usuario nao esta logado.');
 
-        return;        
+        return;
     }
+
+    var connection = application.config.dbConnection;
+    var jogoDAO = new application.app.models.JogoDAO(connection);
+
+    jogoDAO.getAcoes(req.session.usuario);
 
     res.render('pergaminhos', { validacao: {} });
 }
@@ -47,7 +52,7 @@ module.exports.ordenar_acao_sudito = function(application, req, res){
     if (req.session.autorizado !== true) {
         res.send('Usuario nao esta logado.');
 
-        return;        
+        return;
     }
     
     var dadosForm = req.body;

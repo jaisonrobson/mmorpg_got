@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongodb");
+
 function JogoDAO(connection) {
     this._connection = connection();
 }
@@ -70,6 +72,23 @@ JogoDAO.prototype.getAcoes = async function(usuario, res) {
     const result = await myCollection.find({ usuario: usuario, acao_termina_em: { $gt:momento_atual } }).toArray();
 
     res.render('pergaminhos', { acoes: result });
+}
+
+JogoDAO.prototype.revogarAcao = async function(_id, res) {
+    const myDB = this._connection.db("got");
+    const myCollection = myDB.collection("acao");
+
+    try {
+        const result = await myCollection.deleteOne({ _id: new ObjectId(_id) });
+
+        console.log(result);
+
+        if (result.acknowledged)
+            res.redirect('jogo?msg=D');
+
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 

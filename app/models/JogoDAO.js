@@ -28,7 +28,7 @@ JogoDAO.prototype.iniciaJogo = async function(res, usuario, casa, msg) {
 
 JogoDAO.prototype.acao = async function(acao) {
     const myDB = this._connection.db("got");
-    const myCollection = myDB.collection("acao");
+    const acaoCollection = myDB.collection("acao");
 
     var date = new Date();
     var tempo = null;
@@ -42,7 +42,22 @@ JogoDAO.prototype.acao = async function(acao) {
 
     acao.acao_termina_em = date.getTime() + tempo;
 
-    const result = await myCollection.insertOne(acao);
+    await acaoCollection.insertOne(acao);
+
+    const jogoCollection = myDB.collection("jogo");
+
+    var moedas = 0;
+    switch(parseInt(acao.acao)) {
+        case 1: moedas = -2 * acao.quantidade; break;
+        case 2: moedas = -3 * acao.quantidade; break;
+        case 3: moedas = -1 * acao.quantidade; break;
+        case 4: moedas = -1 * acao.quantidade; break;
+    }
+
+    const result = await jogoCollection.updateOne(
+        { usuario: acao.usuario },
+        { $inc: { moeda: moedas } }
+    );
 }
 
 JogoDAO.prototype.getAcoes = async function(usuario, res) {
